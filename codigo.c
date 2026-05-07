@@ -17,6 +17,11 @@ void procesador_run(CPU *c) {
     int prendido = 1;
     while(prendido && c->pc < 16384) {
         unsigned int instruccion = program_memory[c->pc];
-        c->pc++; // Avanzo el PC
+        c->pc++;
+        unsigned int paquete1_op = (instruccion >> 16) & 0xF;
+        unsigned int paquete2_rd = (instruccion >> 12) & 0xF;
+        unsigned int paquete3_rs = (instruccion >> 8)  & 0xF;
+        unsigned int paquete4_rt = (instruccion >> 4)  & 0xF;
+        unsigned int los_otros_8_bits = instruccion & 0xFF;
     }
 }

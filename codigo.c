@@ -23,5 +23,33 @@ void procesador_run(CPU *c) {
         unsigned int paquete3_rs = (instruccion >> 8)  & 0xF;
         unsigned int paquete4_rt = (instruccion >> 4)  & 0xF;
         unsigned int los_otros_8_bits = instruccion & 0xFF;
+
+        switch (paquete1_op) {
+            case 0:
+                c->regs[paquete2_rd] = c->regs[paquete3_rs] + c->regs[paquete4_rt];
+                break;
+            case 2:
+                c->regs[paquete2_rd] = Data_memory[c->regs[paquete3_rs] + los_otros_8_bits];
+                break;
+
+            case 3:
+                c->regs[paquete2_rd] = Data_memory[c->regs[paquete3_rs] + los_otros_8_bits];
+                break;
+
+            case 4:
+                if (c->regs[paquete2_rd] == c->regs[paquete3_rs]) {
+                    c->pc = los_otros_8_bits; // Salta a la dirección
+                }
+                break;
+            case 14:
+                c->pc = instruccion & 0xFFFF; // Usa los últimos 16 bits para el salto
+                break;
+                
+            case 15:
+                prendido = 0;
+                break;
+            default:
+                break;
+        }
     }
 }

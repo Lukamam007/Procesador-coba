@@ -53,3 +53,16 @@ void procesador_run(CPU *c) {
         }
     }
 }
+
+int main() {
+    CPU micpu;
+    iniciar_cpu(&micpu);
+
+    program_memory[0] = (0 << 16) | (1 << 12) | (2 << 8) | (3 << 4) | 0;
+    
+    program_memory[1] = (15 << 16); 
+
+    procesador_run(&micpu);
+
+    return 0;
+}
